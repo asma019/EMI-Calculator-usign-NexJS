@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
 
   // Add headers to allow iframe embedding from any domain
   response.headers.set('X-Frame-Options', 'ALLOWALL');
-  response.headers.set('Content-Security-Policy', 'frame-ancestors *');
+  response.headers.set('Content-Security-Policy', "frame-ancestors 'self' *");
   response.headers.set('Access-Control-Allow-Origin', '*');
   response.headers.set('Access-Control-Allow-Methods', 'GET');
   response.headers.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept');
