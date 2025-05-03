@@ -4,7 +4,7 @@
   <img src="https://img.shields.io/badge/NextJS-15.3.1-black?style=for-the-badge&logo=next.js" alt="Next.js" />
   <img src="https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Tailwind-4-blue?style=for-the-badge&logo=tailwindcss" alt="Tailwind CSS" />
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" />
+  <img src="https://img.shields.io/badge/License-Apache--2.0-green?style=for-the-badge" alt="License" />
 </p>
 
 <p align="center">
@@ -13,7 +13,7 @@
 
 A responsive and interactive web application to calculate loan EMI (Equated Monthly Installment), total interest, and payment schedule. Built with Next.js and optimized for embedding in WordPress sites.
 
-![EMI Calculator Screenshot](https://via.placeholder.com/800x450.png?text=EMI+Calculator+Screenshot)
+![EMI Calculator Screenshot](https://ajkerprogram.com/wp-content/uploads/2025/05/screenshort.png)
 
 ## ✨ Features
 
@@ -29,7 +29,7 @@ A responsive and interactive web application to calculate loan EMI (Equated Mont
 
 ## 🚀 Demo
 
-Check out the live demo: [EMI Calculator Demo](https://emi-calculator-demo.vercel.app)
+Check out the live demo: [EMI Calculator Demo](https://emi.ajkerprogram.com/)
 
 ## 🛠️ Built With
 
@@ -67,8 +67,8 @@ The amortization schedule is calculated by tracking remaining balance with each 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/emi-calculator.git
-   cd emi-calculator
+   git clone https://github.com/asma019/EMI-Calculator-usign-NexJS.git
+   cd EMI-Calculator-using-NextJS
    ```
 
 2. Install dependencies:
@@ -136,7 +136,7 @@ After deploying to Vercel, you can easily embed this calculator in your WordPres
 ```html
 <div style="max-width: 100%; margin: 0 auto;">
   <iframe 
-    src="https://your-deployment-url.vercel.app" 
+    src="https://emi.ajkerprogram.com/"
     width="100%" 
     height="900px" 
     style="border: none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); max-width: 100%;" 
