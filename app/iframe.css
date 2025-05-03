@@ -1,0 +1,55 @@
+/* Iframe-specific styles */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  min-height: 100vh;
+  background-color: transparent !important;
+}
+
+/* Special styling for when content is in an iframe */
+.iframe-container {
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Better font rendering in iframe */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Fix for some WordPress themes that might interfere */
+#root, #__next {
+  display: block !important;
+  width: 100% !important;
+}
+
+/* Responsive adjustments for small screens */
+@media (max-width: 640px) {
+  .iframe-container {
+    font-size: 14px;
+  }
+  
+  h1, h2, h3 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+}
+
+/* Ensure better printing experience */
+@media print {
+  .iframe-container {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  button {
+    display: none !important;
+  }
+} 
