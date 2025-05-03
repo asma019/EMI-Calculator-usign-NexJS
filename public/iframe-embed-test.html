@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMI Calculator - Iframe Embedding Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      color: #333;
+    }
+    h1, h2 {
+      color: #0070f3;
+    }
+    .test-container {
+      margin-bottom: 30px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    .iframe-container {
+      margin-top: 15px;
+      border: 1px solid #ddd;
+      padding: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .code-block {
+      background-color: #f0f0f0;
+      padding: 15px;
+      border-radius: 5px;
+      font-family: monospace;
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+    .success {
+      color: green;
+      font-weight: bold;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+    .button {
+      background-color: #0070f3;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 10px;
+    }
+    .button:hover {
+      background-color: #0051cc;
+    }
+    #results {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>EMI Calculator - Iframe Embedding Test</h1>
+  <p>This page tests whether the EMI Calculator can be successfully embedded in iframes under various scenarios.</p>
+  
+  <div class="test-container">
+    <h2>1. Basic Iframe Test</h2>
+    <p>Simple iframe embedding from same origin:</p>
+    <div class="code-block">&lt;iframe src="/" width="100%" height="800px"&gt;&lt;/iframe&gt;</div>
+    
+    <div class="iframe-container">
+      <iframe 
+        src="/"
+        width="100%" 
+        height="800px" 
+        style="border: none;"
+        title="EMI Calculator - Basic Test"
+        id="basic-iframe"
+      ></iframe>
+    </div>
+    <div id="basic-result"></div>
+  </div>
+  
+  <div class="test-container">
+    <h2>2. Cross-Origin Test</h2>
+    <p>This test checks if the iframe can be embedded from a different origin:</p>
+    <p><small>(Note: For this test to work properly, this HTML file needs to be hosted on a different domain than your EMI calculator)</small></p>
+    
+    <div class="code-block">&lt;iframe src="https://emi.ajkerprogram.com/" width="100%" height="800px"&gt;&lt;/iframe&gt;</div>
+    
+    <button class="button" id="test-cross-origin">Test Cross-Origin Embedding</button>
+    <div id="cross-origin-container" style="display: none;" class="iframe-container">
+      <!-- This will be populated by JavaScript -->
+    </div>
+    <div id="cross-origin-result"></div>
+  </div>
+  
+  <div class="test-container">
+    <h2>3. WordPress-like Embedding Test</h2>
+    <p>This simulates embedding the calculator in a WordPress post or page:</p>
+    
+    <div class="code-block">
+&lt;div style="max-width: 100%; margin: 0 auto;"&gt;
+  &lt;iframe 
+    src="https://emi.ajkerprogram.com/"
+    width="100%" 
+    height="800px" 
+    style="border: none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" 
+    title="Loan EMI Calculator"&gt;
+  &lt;/iframe&gt;
+&lt;/div&gt;
+    </div>
+    
+    <button class="button" id="test-wordpress">Test WordPress-like Embedding</button>
+    <div id="wordpress-container" style="display: none;">
+      <!-- This will be populated by JavaScript -->
+    </div>
+    <div id="wordpress-result"></div>
+  </div>
+  
+  <h2>Headers Check</h2>
+  <p>The following table shows the headers returned by your application that affect iframe embedding:</p>
+  
+  <table id="headers-table">
+    <tr>
+      <th>Header</th>
+      <th>Value</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td>X-Frame-Options</td>
+      <td id="xfo-value">Checking...</td>
+      <td id="xfo-status">Checking...</td>
+    </tr>
+    <tr>
+      <td>Content-Security-Policy</td>
+      <td id="csp-value">Checking...</td>
+      <td id="csp-status">Checking...</td>
+    </tr>
+    <tr>
+      <td>Access-Control-Allow-Origin</td>
+      <td id="acao-value">Checking...</td>
+      <td id="acao-status">Checking...</td>
+    </tr>
+  </table>
+  
+  <div id="results">
+    <h3>Test Results Summary</h3>
+    <p id="summary">Running tests...</p>
+  </div>
+  
+  <script>
+    // Function to check if an iframe loaded successfully
+    function checkIframeLoaded(iframeId, resultElementId) {
+      const iframe = document.getElementById(iframeId);
+      const resultElement = document.getElementById(resultElementId);
+      
+      iframe.onload = function() {
+        try {
+          // Try to access iframe content - if this fails, it means X-Frame-Options is blocking it
+          const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+          resultElement.innerHTML = '<span class="success">✅ Iframe loaded successfully!</span>';
+          updateSummary();
+        } catch (e) {
+          resultElement.innerHTML = '<span class="error">❌ Error loading iframe: ' + e.message + '</span>';
+          updateSummary();
+        }
+      };
+      
+      iframe.onerror = function() {
+        resultElement.innerHTML = '<span class="error">❌ Error loading iframe.</span>';
+        updateSummary();
+      };
+    }
+    
+    // Function to check headers
+    async function checkHeaders() {
+      try {
+        const response = await fetch('/', { method: 'HEAD' });
+        const xfo = response.headers.get('X-Frame-Options') || 'Not set';
+        const csp = response.headers.get('Content-Security-Policy') || 'Not set';
+        const acao = response.headers.get('Access-Control-Allow-Origin') || 'Not set';
+        
+        // Update table
+        document.getElementById('xfo-value').textContent = xfo;
+        document.getElementById('csp-value').textContent = csp;
+        document.getElementById('acao-value').textContent = acao;
+        
+        // Check values
+        if (xfo === 'ALLOWALL' || xfo === 'Not set') {
+          document.getElementById('xfo-status').innerHTML = '<span class="success">Good for embedding</span>';
+        } else if (xfo === 'SAMEORIGIN') {
+          document.getElementById('xfo-status').innerHTML = '<span class="error">Restricts embedding to same origin only</span>';
+        } else if (xfo.startsWith('ALLOW-FROM')) {
+          document.getElementById('xfo-status').innerHTML = '<span class="error">Restricts embedding to specific origins</span>';
+        } else {
+          document.getElementById('xfo-status').innerHTML = '<span class="error">Unknown value</span>';
+        }
+        
+        if (csp.includes('frame-ancestors *')) {
+          document.getElementById('csp-status').innerHTML = '<span class="success">Good for embedding</span>';
+        } else if (csp.includes('frame-ancestors')) {
+          document.getElementById('csp-status').innerHTML = '<span class="error">Restricts embedding to specific origins</span>';
+        } else {
+          document.getElementById('csp-status').innerHTML = '<span class="success">No restrictions</span>';
+        }
+        
+        if (acao === '*') {
+          document.getElementById('acao-status').innerHTML = '<span class="success">Good for embedding</span>';
+        } else if (acao === 'Not set') {
+          document.getElementById('acao-status').innerHTML = '<span class="error">Not set</span>';
+        } else {
+          document.getElementById('acao-status').innerHTML = '<span class="error">Restricts cross-origin requests</span>';
+        }
+        
+        updateSummary();
+      } catch (error) {
+        console.error('Error checking headers:', error);
+      }
+    }
+    
+    // Function to update summary
+    function updateSummary() {
+      const basicResult = document.getElementById('basic-result').textContent;
+      const crossOriginResult = document.getElementById('cross-origin-result').textContent;
+      const wordpressResult = document.getElementById('wordpress-result').textContent;
+      
+      const xfoStatus = document.getElementById('xfo-status').textContent;
+      const cspStatus = document.getElementById('csp-status').textContent;
+      const acaoStatus = document.getElementById('acao-status').textContent;
+      
+      let summary = '';
+      
+      if (basicResult.includes('✅') && 
+          ((crossOriginResult.includes('✅') || crossOriginResult === '') && 
+           (wordpressResult.includes('✅') || wordpressResult === '')) &&
+          !xfoStatus.includes('Restricts') && 
+          !cspStatus.includes('Restricts') &&
+          !acaoStatus.includes('Not set') && 
+          !acaoStatus.includes('Restricts')) {
+        summary = '<span class="success">✅ Your EMI Calculator appears to be properly configured for iframe embedding!</span>';
+      } else if (basicResult.includes('✅') && 
+                (!xfoStatus.includes('Restricts') || 
+                 !cspStatus.includes('Restricts'))) {
+        summary = '<span class="success">✅ Basic embedding works, but there might be issues with cross-origin embedding.</span>';
+      } else {
+        summary = '<span class="error">❌ There are issues with iframe embedding. Please check the headers and configurations.</span>';
+      }
+      
+      document.getElementById('summary').innerHTML = summary;
+    }
+    
+    // Test button for cross-origin
+    document.getElementById('test-cross-origin').addEventListener('click', function() {
+      const container = document.getElementById('cross-origin-container');
+      container.style.display = 'block';
+      container.innerHTML = '<iframe src="https://emi.ajkerprogram.com/" width="100%" height="800px" style="border: none;" id="cross-origin-iframe"></iframe>';
+      checkIframeLoaded('cross-origin-iframe', 'cross-origin-result');
+    });
+    
+    // Test button for WordPress-like embedding
+    document.getElementById('test-wordpress').addEventListener('click', function() {
+      const container = document.getElementById('wordpress-container');
+      container.style.display = 'block';
+      container.innerHTML = `
+        <div style="max-width: 100%; margin: 0 auto;">
+          <iframe 
+            src="https://emi.ajkerprogram.com/"
+            width="100%" 
+            height="800px" 
+            style="border: none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" 
+            title="Loan EMI Calculator"
+            id="wordpress-iframe">
+          </iframe>
+        </div>
+      `;
+      checkIframeLoaded('wordpress-iframe', 'wordpress-result');
+    });
+    
+    // Run tests when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      checkIframeLoaded('basic-iframe', 'basic-result');
+      checkHeaders();
+    });
+  </script>
+</body>
+</html> 

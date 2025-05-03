@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iframe Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .iframe-container {
+      margin: 20px 0;
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>EMI Calculator Iframe Test</h1>
+  <p>This page tests whether the EMI Calculator can be embedded in an iframe.</p>
+  
+  <div class="iframe-container">
+    <h2>Basic Iframe Test</h2>
+    <iframe 
+      src="/"
+      width="100%" 
+      height="800px" 
+      style="border: none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
+      title="EMI Calculator"
+    ></iframe>
+  </div>
+  
+  <script>
+    // Log any errors
+    window.addEventListener('error', function(e) {
+      console.error('Iframe error:', e.message);
+    });
+  </script>
+</body>
+</html> 

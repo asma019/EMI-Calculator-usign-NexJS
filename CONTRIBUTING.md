@@ -37,7 +37,7 @@ By participating in this project, you agree to abide by our Code of Conduct: be 
 
 ### Setting Up the Development Environment
 
-1. Clone the repository: `git clone https://github.com/yourusername/emi-calculator.git`
+1. Clone the repository: `git clone https://github.com/asma019/EMI-Calculator-usign-NexJS.git`
 2. Install dependencies: `npm install`
 3. Start the development server: `npm run dev`
 
@@ -79,7 +79,7 @@ emi-calculator/
 
 ## License
 
-By contributing to this project, you agree that your contributions will be licensed under the project's [MIT License](LICENSE).
+By contributing to this project, you agree that your contributions will be licensed under the project's [Apache License 2.0](LICENSE).
 
 ---
 
